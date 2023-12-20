@@ -592,6 +592,8 @@ func main() {
 	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 	// Use the CORS middleware
 	corsHandler := handlers.CORS(originsOk, headersOk, methodsOk)(router)
+	router.Use(handlers.CORS(originsOk, headersOk, methodsOk))
+
 	// Start the server with the CORS middleware enabled
 	err := http.ListenAndServe(":"+port, corsHandler)
 	if err != nil {
