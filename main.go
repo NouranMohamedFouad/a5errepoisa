@@ -576,7 +576,7 @@ func main() {
 	router := mux.NewRouter()
 
 	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
-	originsOk := handlers.AllowedOrigins([]string{"*"})
+	originsOk := handlers.AllowedOrigins([]string{"https://clinic-git-nouranmohamed-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com"})
 	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 	// Use the CORS middleware
 	corsHandler := handlers.CORS(originsOk, headersOk, methodsOk)(router)
