@@ -588,7 +588,7 @@ func main() {
 	router.HandleFunc("/Patient/UpdateReservation/Slot", UpdateReservationSlot).Methods("POST")
 
 	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
-	originsOk := handlers.AllowedOrigins([]string{"http://localhost:3000"}) // Replace with the actual origin of your frontend
+	originsOk := handlers.AllowedOrigins([]string{"*"})
 	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 	// Use the CORS middleware
 	corsHandler := handlers.CORS(originsOk, headersOk, methodsOk)(router)
