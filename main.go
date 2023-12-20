@@ -574,6 +574,14 @@ func main() {
 	client, _ = mongo.Connect(ctx, clientOptions)
 
 	router := mux.NewRouter()
+
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	// Use the CORS middleware
+	corsHandler := handlers.CORS(originsOk, headersOk, methodsOk)(router)
+	router.Use(handlers.CORS(originsOk, headersOk, methodsOk))
+	
 	router.HandleFunc("/test", test).Methods("GET")
 	router.HandleFunc("/SignUP", SignUPEndPoint).Methods("POST")
 	router.HandleFunc("/SignIN", SignIN).Methods("POST")
@@ -587,12 +595,7 @@ func main() {
 	router.HandleFunc("/Patient/UpdateReservation/Doctor", UpdateReservationDoctor).Methods("POST")
 	router.HandleFunc("/Patient/UpdateReservation/Slot", UpdateReservationSlot).Methods("POST")
 
-	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
-	originsOk := handlers.AllowedOrigins([]string{"*"})
-	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-	// Use the CORS middleware
-	corsHandler := handlers.CORS(originsOk, headersOk, methodsOk)(router)
-	router.Use(handlers.CORS(originsOk, headersOk, methodsOk))
+	
 
 	// Start the server with the CORS middleware enabled
 	err := http.ListenAndServe(":"+port, corsHandler)
