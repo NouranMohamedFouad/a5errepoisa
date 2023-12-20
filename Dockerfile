@@ -13,4 +13,4 @@ RUN go build -o clinic .
 CMD [ "./clinic" ]
 
 # Expose the default port as documentation, but it will be overridden by the environment variable
-#EXPOSE 12345
+EXPOSE 12345
